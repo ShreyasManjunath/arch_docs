@@ -16,6 +16,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,7 +56,15 @@ jobs:
 
       # --- 7. Configure GitHub Pages environment ---
       - name: Configure Pages
+        if: ${{ env.PAGES_TOKEN == '' }}
         uses: actions/configure-pages@v5
+
+      - name: Configure Pages and enable site
+        if: ${{ env.PAGES_TOKEN != '' }}
+        uses: actions/configure-pages@v5
+        with:
+          token: ${{ env.PAGES_TOKEN }}
+          enablement: true
 
       # --- 8. Upload built site as Pages artifact (NOT tar) ---
       - name: Upload Pages artifact
