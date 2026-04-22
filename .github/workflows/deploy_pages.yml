@@ -25,11 +25,11 @@ jobs:
     steps:
       # --- 1. Checkout repository ---
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # --- 2. Setup Python ---
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -57,18 +57,18 @@ jobs:
       # --- 7. Configure GitHub Pages environment ---
       - name: Configure Pages
         if: ${{ env.PAGES_TOKEN == '' }}
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Configure Pages and enable site
         if: ${{ env.PAGES_TOKEN != '' }}
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           token: ${{ env.PAGES_TOKEN }}
           enablement: true
 
       # --- 8. Upload built site as Pages artifact (NOT tar) ---
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _build/html
           include-hidden-files: true
@@ -76,7 +76,7 @@ jobs:
       # --- 9. Deploy to GitHub Pages ---
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # --- 10. Print the live production URL ---
       - name: Show production URL
