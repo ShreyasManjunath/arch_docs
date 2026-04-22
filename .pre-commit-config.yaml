@@ -1,0 +1,41 @@
+repos:
+  # Basic hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  # RST linting (core)
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.0
+    hooks:
+      - id: rstcheck
+        args:
+          [
+            "--report-level", "warning",
+            "--ignore-directives=automodule,autoclass,autofunction",
+            "--ignore-roles=ref,doc",
+          ]
+
+  # Markdown (if mixed repo)
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.17
+    hooks:
+      - id: mdformat
+
+  # Python formatting (for conf.py / scripts)
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+
+  # Optional: spelling (good for docs)
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        args: ["--ignore-words-list=teh"]
